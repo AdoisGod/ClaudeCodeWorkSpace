@@ -1,0 +1,47 @@
+# PD20 Excel 結構配置
+version: "1.0"
+last_updated: "2024-12-13"
+
+# 工作表排除規則（支援正則表達式）
+exclude_patterns:
+  - "工作表\\d+"        # 工作表1, 工作表2, ...
+  - "Errcode"           # 錯誤碼表
+  - "料號清單"           # 料號清單
+  - "Recipe清單"         # 料號清單別名
+  - ".*測試.*"           # 包含「測試」
+  - ".*test.*"          # 包含「test」
+  - "^temp.*"           # temp 開頭
+  - "^draft.*"          # draft 開頭
+  - ".*_backup$"        # _backup 結尾
+
+# 工作表結構定義
+sheet_structure:
+  required_columns:
+    - "Address"
+    - "DataType"
+    - "Content"
+  optional_columns:
+    - "R/W"
+    - "ActionType"
+    - "PT"
+  standard_positions:
+    address: "A"
+    rw: "B"
+    action_type: "C"
+    data_type: "D"
+    pt: "E"
+    content: "F"
+
+# 資料型態轉換規則
+datatype_mapping:
+  "Bit + None": "BOOL"
+  "Word + float": "REAL32"
+  "Word + Uint": "UINT16"
+  "Word + Int": "INT16"
+
+# DM/MR 佔用規則
+address_occupation:
+  BOOL: 0
+  UINT16: 1
+  INT16: 1
+  REAL32: 2
